@@ -139,21 +139,21 @@
         cursor: pointer;
         opacity: .8;
     }
-    ul li:nth-child(even){
+   .todolist ul li:nth-child(even){
         background: #f4ecec;
     }
 
     li:hover{
         cursor: pointer;
     }
-    #filters li a.selected {
+    .todoTab li a.selected {
         border-color: rgba(175, 47, 47, 0.2);
     }
-    #filters li a.selected, #filters li a:hover {
+    .todoTab li a.selected, #filters li a:hover {
         border-color: rgba(175, 47, 47, 0.1);
     }
 
-    #filters li {
+    .todoTab li {
         display: inline;
         margin: 0 0 5px 0;
         padding: 8px;
