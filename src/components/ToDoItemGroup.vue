@@ -8,18 +8,15 @@
             <div class="addToDoList">
                 <input type="text" v-model="todoItem" placeholder="add to do item"
                        @keyup.enter="enterAddToDoItem(todoItem)"
-              />
+                />
                 <Button id="addBtn" @click="addToDoItem(todoItem)">add</Button>
             </div>
             <div class="todolist">
                 <ul>
-                    <li v-for="(item,index) in generateFilterList" :key="index">
+                    <li v-for="(item,index) in generateFilterList" :key="item.id">
                         <to-do-item :item="item" :itemIndex="index"></to-do-item>
                     </li>
                 </ul>
-                <!--        <template v-for="(item,index) in generateFilterList">-->
-                <!--          <to-do-item :item="item" :itemIndex="index"></to-do-item>-->
-                <!--        </template>-->
             </div>
             <div class="todoTab">
                 <ul class="item-count">
@@ -32,8 +29,8 @@
                            @click="switchTab('Active')">Active</a>
                     </li>
                     <li class="action">
-                        <a :class="{active:tabType==='Complete'}" href="javascript:void(0);"
-                           @click="switchTab('Complete')">Complete</a>
+                        <a :class="{active:tabType==='completed'}" href="javascript:void(0);"
+                           @click="switchTab('completed')">Complete</a>
                     </li>
                 </ul>
             </div>
@@ -43,7 +40,7 @@
 
 <script>
     import toDoItem from './ToDoItem'
-
+    const axios = require('axios');
     export default {
         name: 'TodoList',
         components: {
@@ -58,16 +55,30 @@
                 visibility: "ALL"
             }
         },
+        created() {
+            axios.get("http://localhost:3001/todos").then((response) => {
+                this.$store.commit('addToDoItemList', {
+                list:response.data
+                });
+            });
+        },
         computed: {
             generateFilterList() {
                 if (this.tabType === 'ALL') {
                     return this.$store.state.todoItemList;
                 } else if (this.tabType === 'Active') {
-                    return this.$store.state.todoItemList.filter((e) =>
-                        !e.isComplete);
+                    console.log("Active");
+                    const a = this.$store.state.todoItemList.filter((e) =>
+                        !e.completed);
+                    return a;
                 } else {
-                    return this.$store.state.todoItemList.filter((e) =>
-                        e.isComplete);
+                    console.log("Completed");
+                    const a = this.$store.state.todoItemList.filter((e) =>
+                        e.completed);
+                   a.forEach(e=>{
+                       console.log(a);
+                   })
+                    return a;
                 }
             }
         },
@@ -79,9 +90,9 @@
                 if (todoItem === '' || todoItem == null) {
                     return;
                 } else {
-                    this.$store.commit('addToDoItem', {
-                        todoItemName: this.todoItem,
-                        isComplete: false,
+                    this.$store.dispatch('addToDoItem', {
+                        content: this.todoItem,
+                        completed: false,
                         editable: false
                     });
                     this.todoItem = '';
@@ -115,7 +126,7 @@
         overflow: auto;
     }
 
-    .addToDoList input{
+    .addToDoList input {
         width: 80%;
         -web-kit-appearance: none;
         -moz-appearance: none;
@@ -126,7 +137,8 @@
         color: #6a6f77;
         outline: 0;
     }
-    #addBtn{
+
+    #addBtn {
         display: inline-block;
         background-color: #fc999b;
         color: #ffffff;
@@ -135,20 +147,24 @@
         margin-top: 2px;
         padding: 5px 15px;
     }
-    #addBtn:hover{
+
+    #addBtn:hover {
         cursor: pointer;
         opacity: .8;
     }
-   .todolist ul li:nth-child(even){
+
+    .todolist ul li:nth-child(even) {
         background: #f4ecec;
     }
 
-    li:hover{
+    li:hover {
         cursor: pointer;
     }
+
     .todoTab li a.selected {
         border-color: rgba(175, 47, 47, 0.2);
     }
+
     .todoTab li a.selected, #filters li a:hover {
         border-color: rgba(175, 47, 47, 0.1);
     }
@@ -165,6 +181,7 @@
         color: #999;
         text-decoration: line-through;
     }
+
     /*.addTodoList Button {*/
     /*    background: none;*/
     /*    border: none;*/
@@ -175,9 +192,11 @@
         display: inline-block;
         margin: 0 10px;
     }
+
     .todoitem {
         text-align: left;
     }
+
     .container {
         padding: 20px;
         width: 600px;

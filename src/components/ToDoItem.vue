@@ -1,13 +1,14 @@
 <template>
   <div class="todoitem">
     <label><span>{{itemIndex+1}}.</span></label>
-    <input type="checkbox" v-model="item.isComplete" checked="item.isComplete?'checked':''"/>
-    <label v-show="!item.editable"
+    <input type="checkbox" v-model="completed" checked="item.completed?'checked':''"
+    @change="changeStatus"/>
+    <label v-show="!editable"
            @dblclick="startEditTodoItem(item)"
-           :class="item.isComplete ? 'finish' : 'notFinish'">{{item.todoItemName}}</label>
-    <input type="text" class="editor" v-model="item.todoItemName"
-           v-show="item.editable"
-           @blur="editTodoItem(item)" @keyup.enter="editTodoItem(item)"/>
+           :class="completed ? 'finish' : 'notFinish'">{{content}}</label>
+    <input type="text" class="editor" v-model="content"
+           v-show="editable"
+           @keyup.enter="editTodoItem(item)"/>
   </div>
 </template>
 
@@ -19,21 +20,32 @@
     },
     data() {
       return {
+        id:this.item.id,
+        content:this.item.content,
+        completed:this.item.completed,
+        editable:this.item.editable
       }
     },
     methods: {
       startEditTodoItem(todoItem) {
-        todoItem.editable = true;
+        console.log("startEditTodoItem");
+        this.editable = true;
       },
       editTodoItem(todoItem) {
-        todoItem.editable = false;
+        console.log("editTodoItem");
+        this.editable = false;
+        this.$store.dispatch('changeToDoItem', {data:{id:this.id,
+            content:this.content,completed:this.completed,editable:this.editable},completed:this.completed});
       },
-    },
-    // watch: {
-    //   itemName: function (newValue) {
-    //     this.$store.commit('changeToDoItem',this.itemIndex,newValue);
-    //   }
-    // }
+        changeStatus(){
+        console.log("status:"+this.completed);
+            this.$nextTick(() => {
+              this.$store.dispatch('changeToDoItem', {data:{id:this.id,
+                  content:this.content,completed:this.completed
+                  ,editable:this.editable},completed:this.completed});
+            })
+        }
+    }
   }
 
 </script>
