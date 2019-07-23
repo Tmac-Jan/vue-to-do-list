@@ -1,5 +1,5 @@
 import * as type from "./mutations-type";
-import {addTodoItem, getTodoItems, updateTodoItem} from "../api";
+import {addTodoItem, getTodoItems, updateTodoItem, deleteTodoItem} from "../api";
 
 const actions = {
     async addTodoItem({ commit }, toDoItem) {
@@ -11,6 +11,10 @@ const actions = {
     async updateTodoItem({ commit }, toDoItem) {
         commit(type.UPDATE_TODO_ITEMS, await updateTodoItem(toDoItem.id, toDoItem));
     },
+    async deleteTodoItem({ commit }, id) {
+        await deleteTodoItem(id);
+        commit(type.DELETE_TODO_ITEM, id);
+    }
 }
 
 

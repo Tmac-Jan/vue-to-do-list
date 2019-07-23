@@ -9,7 +9,7 @@
                 <input type="text" v-model="todoItem" placeholder="add to do item"
                        @keyup.enter="enterAddToDoItem(todoItem)"
                 />
-                <Button id="addBtn" @click="addToDoItem(todoItem)">add</Button>
+                <Button id="addBtn" @click="addItem(todoItem)">add</Button>
             </div>
             <div class="todolist">
                 <ul>
@@ -63,35 +63,38 @@
                 if (this.tabType === 'ALL') {
                     return this.$store.state.todoItemList;
                 } else if (this.tabType === 'Active') {
-                    console.log("Active");
                     const a = this.$store.state.todoItemList.filter((e) =>
                         !e.completed);
                     return a;
                 } else {
-                    console.log("Completed");
                     const a = this.$store.state.todoItemList.filter((e) =>
                         e.completed);
                    a.forEach(e=>{
-                       console.log(a);
-                   })
+
+                   });
                     return a;
                 }
             }
         },
         methods: {
-            ...mapActions(["requestTodoItems"]),
+            ...mapActions(["requestTodoItems","addTodoItem"]),
             enterAddToDoItem(todoItem) {
-                this.addToDoItem(todoItem);
+                this.addItem(todoItem);
             },
-            addToDoItem(todoItem) {
+            addItem(todoItem) {
                 if (todoItem === '' || todoItem == null) {
                     return;
                 } else {
-                    this.$store.dispatch('addToDoItem', {
-                        content: this.todoItem,
-                        completed: false,
-                        editable: false
-                    });
+                    this.addTodoItem({
+                            content: this.todoItem,
+                            completed: false,
+                            editable: false
+                        });
+                    // this.$store.dispatch('addToDoItem', {
+                    //     content: this.todoItem,
+                    //     completed: false,
+                    //     editable: false
+                    // });
                     this.todoItem = '';
                 }
             },
