@@ -1,39 +1,44 @@
-const axios = require('axios');
+import Vue from "vue";
+import * as type from "./mutations-type";
+
 const mutations = {
-    addToDoItemList(state, toDoItemList) {
-        state.todoItemList = toDoItemList.list;
+    // addToDoItemList(state, toDoItemList) {
+    //     //     state.todoItemList = toDoItemList.list;
+    //     // },
+    //     // addToDoItem(state, toDoItem) {
+    //     //
+    //     //     state.todoItemList.push(toDoItem);
+    //     // },
+    //     // changeToDoItem(state, toDoItem) {
+    //     //     state.todoItemList.forEach(function (e) {
+    //     //         if (e.id === toDoItem.data.id) {
+    //     //             e.content = toDoItem.data.content;
+    //     //             e.completed = toDoItem.completed;
+    //     //             e.editable = toDoItem.data.editable;
+    //     //         }
+    //     //     });
+    //     // }
+    //state.todoItemList.splice(index,0,todoItem);
+    [type.UPDATE_TODO_ITEMS](state, toDoItem) {
+        Vue.set(state.todoItemList, toDoItem.id, toDoItem);
     },
-    addToDoItem(state, toDoItem) {
-        axios.post("http://localhost:3001/todos", {
-            'id': toDoItem.id,
-            'content': toDoItem.content,
-            'completed': toDoItem.completed,
-            'editable': toDoItem.editable
-        }).then((response) => {
-            state.todoItemList.push(toDoItem);
-        }).catch(e => {
-        });
+
+    [type.ADD_TODO_ITEM](state, toDoItem) {
+        state.todoItemList.push(toDoItem);
     },
-    changeToDoItem(state, toDoItem) {
-        axios.put("http://localhost:3001/todos/" + toDoItem.data.id, {
-            'id': toDoItem.data.id,
-            'content': toDoItem.data.content,
-            'completed': toDoItem.completed,
-            //'editable': toDoItem.data.editable
-        }).then((response) => {
-            //state.todoItemList.push(toDoItem);
-            state.todoItemList.forEach(function (e) {
-                if (e.id === toDoItem.data.id) {
-                    e.content = toDoItem.data.content;
-                    e.completed = toDoItem.completed;
-                    e.editable = toDoItem.data.editable;
-                }
-            });
-        }).catch(e => {
-        });
+
+    [type.UPDATE_STATUS](state, newStatus) {
+        state.status = newStatus;
+    },
+
+    [type.SAVE_TODO_ITEMS](state, toDoItems) {
+        state.todoItemList = toDoItems;
+    },
+
+    [type.DELETE_TODO_ITEM](state, id) {
+        const deleteIndex = state.todoItemList.findIndex(x => x.id === id);
+        state.todoItemList.splice(deleteIndex, 1);
 
     }
-    //state.todoItemList.splice(index,0,todoItem);
 }
-
 export default mutations

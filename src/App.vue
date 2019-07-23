@@ -1,16 +1,15 @@
 <template>
   <div id="app">
-<ToDoItemGroup></ToDoItemGroup>
+<!--<ToDoItemGroup></ToDoItemGroup>-->
+<router-view></router-view>
   </div>
-
 </template>
-
 <script>
-    import ToDoItemGroup from './components/ToDoItemGroup.vue'
+    // import ToDoItemGroup from './components/ToDoItemGroup.vue'
 export default {
   name: 'app',
   components: {
-      ToDoItemGroup
+      // ToDoItemGroup
   },
   data(){
     return{

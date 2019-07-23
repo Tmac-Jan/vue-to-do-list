@@ -40,7 +40,7 @@
 
 <script>
     import toDoItem from './ToDoItem'
-    const axios = require('axios');
+    import { mapState, mapActions } from "vuex";
     export default {
         name: 'TodoList',
         components: {
@@ -56,11 +56,7 @@
             }
         },
         created() {
-            axios.get("http://localhost:3001/todos").then((response) => {
-                this.$store.commit('addToDoItemList', {
-                list:response.data
-                });
-            });
+          this.requestTodoItems();
         },
         computed: {
             generateFilterList() {
@@ -83,6 +79,7 @@
             }
         },
         methods: {
+            ...mapActions(["requestTodoItems"]),
             enterAddToDoItem(todoItem) {
                 this.addToDoItem(todoItem);
             },
