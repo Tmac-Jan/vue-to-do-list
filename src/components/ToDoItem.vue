@@ -13,6 +13,7 @@
 </template>
 
 <script>
+  import {mapActions } from "vuex";
   export default {
     props: {
       item: Object,
@@ -27,6 +28,7 @@
       }
     },
     methods: {
+      ...mapActions(["updateTodoItem"]),
       startEditTodoItem(todoItem) {
         console.log("startEditTodoItem");
         this.editable = true;
@@ -34,15 +36,16 @@
       editTodoItem(todoItem) {
         console.log("editTodoItem");
         this.editable = false;
-        this.$store.dispatch('changeToDoItem', {data:{id:this.id,
-            content:this.content,completed:this.completed,editable:this.editable},completed:this.completed});
+        this.updateTodoItem({id:this.id,
+            content:this.content,completed:this.completed
+            ,editable:this.editable});
       },
         changeStatus(){
         console.log("status:"+this.completed);
             this.$nextTick(() => {
-              this.$store.dispatch('changeToDoItem', {data:{id:this.id,
-                  content:this.content,completed:this.completed
-                  ,editable:this.editable},completed:this.completed});
+              this.updateTodoItem({id:this.id,
+                content:this.content,completed:this.completed
+                ,editable:this.editable});
             })
         }
     }

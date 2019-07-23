@@ -1,5 +1,5 @@
 <template>
-    <div class="todoitem">
+    <div class="container">
         <h1>Hello App!</h1>
         <p><label>请输入姓名</label><input type="text" v-model="userName"></p>
         <p>

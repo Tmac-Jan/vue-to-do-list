@@ -40,7 +40,7 @@
 
 <script>
     import toDoItem from './ToDoItem'
-    import { mapState, mapActions } from "vuex";
+    import {mapActions } from "vuex";
     export default {
         name: 'TodoList',
         components: {
