@@ -12,7 +12,7 @@
                 <Button id="addBtn" @click="addItem(todoItem)">add</Button>
             </div>
             <div class="todolist">
-                <ul>
+                <ul class="todolist-ul">
                     <li v-for="(item,index) in generateFilterList" :key="item.id">
                         <to-do-item :item="item" :itemIndex="index"></to-do-item>
                     </li>
@@ -69,9 +69,6 @@
                 } else {
                     const a = this.$store.state.todoItemList.filter((e) =>
                         e.completed);
-                   a.forEach(e=>{
-
-                   });
                     return a;
                 }
             }
@@ -90,11 +87,6 @@
                             completed: false,
                             editable: false
                         });
-                    // this.$store.dispatch('addToDoItem', {
-                    //     content: this.todoItem,
-                    //     completed: false,
-                    //     editable: false
-                    // });
                     this.todoItem = '';
                 }
             },
@@ -106,8 +98,8 @@
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
-    body {
+<style >
+    #container {
         font: normal normal 13px/16px "Open Sans", sans-serif;
         background: #ccc;
     }
@@ -151,6 +143,10 @@
     #addBtn:hover {
         cursor: pointer;
         opacity: .8;
+    }
+
+    .todolist-ul{
+        margin-left: 30px;
     }
 
     .todolist ul li:nth-child(even) {

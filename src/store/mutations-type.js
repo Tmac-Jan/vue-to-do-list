@@ -8,3 +8,5 @@ export const UPDATE_STATUS = "UPDATE_STATUS";
 export const SAVE_TODO_ITEMS = "SAVE_TODO_ITEMS";
 
 export const DELETE_TODO_ITEM = "DELETE_TODO_ITEM";
+
+export const SET_USER_NAME = "SET_USER_NAME";

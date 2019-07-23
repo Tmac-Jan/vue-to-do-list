@@ -1,5 +1,6 @@
 const state = {
-    todoItemList: []
+    todoItemList: [],
+    userName:''
 }
 
 export default state

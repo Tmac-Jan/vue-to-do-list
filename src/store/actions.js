@@ -14,6 +14,9 @@ const actions = {
     async deleteTodoItem({ commit }, id) {
         await deleteTodoItem(id);
         commit(type.DELETE_TODO_ITEM, id);
+    },
+    setUserName({commit},userName){
+        commit(type.SET_USER_NAME, userName);
     }
 }
 
