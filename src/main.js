@@ -31,7 +31,7 @@ const routes = [
         component: Home,
         children: [
             {
-                path: "/ToDoItemGroup",
+                path: "",
                 component: ToDoItemGroup,
                 name:"ToDoItemGroup"
             },

@@ -41,7 +41,7 @@
             goBack(){
                 const result = confirm("go back？");
                 if (result && window.history.length > 1) {
-                    this.$router.go(-1);
+                    this.$router.push({name: 'Welcome'});
                 }
             }
         }

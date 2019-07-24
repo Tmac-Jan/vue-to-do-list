@@ -4,7 +4,6 @@ import * as type from "./mutations-type";
 const mutations = {
 
     [type.UPDATE_TODO_ITEMS](state, toDoItem) {
-        console.log(JSON.stringify(state.todoItemList))
         Vue.set(state.todoItemList, toDoItem.id - 1, toDoItem);
     },
 
